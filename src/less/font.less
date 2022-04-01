@@ -1,0 +1,11 @@
+.generateFontSize(@min) when (@min <= 40) {
+    .font-size-@{min} {
+        font-size: (@min + 0px);
+    }
+    .fs-@{min} {
+        font-size: (@min + 0px);
+    }
+    .generateFontSize(if(@min < 20, (@min + 1), (@min + 2)));
+}
+
+.generateFontSize(12);

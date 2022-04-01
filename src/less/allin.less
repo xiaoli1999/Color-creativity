@@ -1,0 +1,71 @@
+@import './iview.less';
+@import './basic.less';
+@import './border.less';
+@import './color.less';
+@import './font.less';
+@import './layout.less';
+@import './margin.less';
+@import './scrollbar.less';
+@import './text.less';
+
+.state-tag {
+    border-radius: 11px;
+    margin-right: 0;
+}
+
+.state-bar-mini {
+    .flex;
+    .flex-justify-between;
+    .flex-align-center;
+    height: 30px;
+
+    > div:first-child {
+        min-width: 130px;
+    }
+
+    .progress {
+        width: 100%;
+    }
+}
+
+.progress-bar {
+    .flex;
+    .flex-justify-between;
+    .flex-align-center;
+    height: 38px;
+
+    > div:first-child {
+        min-width: 130px;
+    }
+
+    .progress {
+        width: 100%;
+    }
+}
+
+.ivu-progress {
+    .flex;
+    .flex-justify-between;
+}
+
+.ivu-progress-text {
+    text-align: right;
+    width: 100%;
+    min-width: 110px;
+}
+
+.ivu-progress-show-info .ivu-progress-outer {
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.operation-table {
+    .ivu-table td {
+        height: 50px;
+    }
+}
+
+.ivu-cell-footer {
+    max-width: 50%;
+    overflow-x: hidden;
+}

@@ -1,0 +1,53 @@
+.generateMarginPadding(@i) when (@i < 40) {
+    /* margin */
+    .m-@{i} {
+        margin: (@i+ 0px);
+    }
+    .mt-@{i} {
+        margin-top: (@i+ 0px);
+    }
+    .mr-@{i} {
+        margin-right: (@i+ 0px);
+    }
+    .mb-@{i} {
+        margin-bottom: (@i+ 0px);
+    }
+    .ml-@{i} {
+        margin-left: (@i+ 0px);
+    }
+    .mlr-@{i} {
+        margin-left: (@i+ 0px);
+        margin-right: (@i+ 0px);
+    }
+    .mtb-@{i} {
+        margin-top: (@i+ 0px);
+        margin-bottom: (@i+ 0px);
+    }
+    
+    .p-@{i} {
+        padding: (@i+ 0px);
+    }
+    .pt-@{i} {
+        padding-top: (@i+ 0px);
+    }
+    .pr-@{i} {
+        padding-right: (@i+ 0px);
+    }
+    .pb-@{i} {
+        padding-bottom: (@i+ 0px);
+    }
+    .pl-@{i} {
+        padding-left: (@i+ 0px);
+    }
+    .plr-@{i} {
+        padding-left: (@i+ 0px);
+        padding-right: (@i+ 0px);
+    }
+    .ptb-@{i} {
+        padding-top: (@i+ 0px);
+        padding-bottom: (@i+ 0px);
+    }
+    .generateMarginPadding(if(@i < 10, (@i + 1), if(@i < 20,(@i + 2),(@i + 5))));
+}
+
+.generateMarginPadding(5);
