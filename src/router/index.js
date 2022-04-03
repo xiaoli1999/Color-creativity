@@ -6,7 +6,7 @@ import routes from './routers'
 Vue.use(Router)
 const router = new Router({
     routes,
-    mode: 'history'
+    mode: 'hash'
 })
 
 // 解决跳转到同路由报错

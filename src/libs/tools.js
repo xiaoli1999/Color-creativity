@@ -168,73 +168,13 @@ export const RandomRange = (min, max) => {
 }
 
 /**
- * @param {Array} list 通过路由列表得到菜单列表
- * @param {Array} access 用户权限允许的路由列表
- * @param {Boolean} hideInMenu 是否包含隐藏的菜单
- * @returns {Array}
+ * @deprecated 获取随机16进制颜色
+ * @returns {String} 返回颜色
  */
-export const getMenuByRouter = (list, access, hideInMenu = false) => {
-    access = access || []
-    const res = []
-    list.forEach(item => {
-        if (!item.meta || (item.meta && (hideInMenu || !item.meta.hideInMenu))) {
-            const obj = {
-                icon: (item.meta && item.meta.icon) || '',
-                name: item.name,
-                meta: item.meta
-            }
-            if (item.children && item.children.length) {
-                obj.children = getMenuByRouter(item.children, access, hideInMenu)
-            }
-            if (item.meta.access && !item.meta.access.includes('*')) {
-                access.some(_ => {
-                    if (item.meta.access.includes(_)) {
-                        res.push(obj)
-                        return true
-                    }
-                    return false
-                })
-            } else {
-                res.push(obj)
-            }
-        }
-    })
-    return res
-}
-
-export const findNodeUpperByClasses = (ele, classes) => {
-    const parentNode = ele.parentNode
-    if (parentNode) {
-        const classList = parentNode.classList
-        if (classList && classes.every(className => classList.contains(className))) {
-            return parentNode
-        } else {
-            return findNodeUpperByClasses(parentNode, classes)
-        }
+export const randomColor = () => {
+    let color = ''
+    for (let i = 0; i < 6; i++) {
+        color += '0123456789ABCDEF'[Math.floor(Math.random() * 16)]
     }
-}
-
-export const getProgressColor = (value) => {
-    const val = Number(value)
-    if (val <= 15) {
-        return '#ed4014'
-    }
-    if (val <= 35) {
-        return '#E6A23C'
-    }
-    if (val <= 80) {
-        return '#2d8cf0'
-    }
-    return '#19be6b'
-}
-
-export const RCLowPass = (list, fixed = 0, a = 0.2) => {
-    const result = [list[0]]
-    for (let i = 1; i < list.length; i++) {
-        result.push([
-            list[i][0],
-            Number((a * list[i][1] + (1 - a) * result[i - 1][1]).toFixed(fixed))
-        ])
-    }
-    return result
+    return color
 }

@@ -41,9 +41,10 @@ const cdn = {
         ]
     }
 }
+
 const IS_PROD = process.env.NODE_ENV === 'production'
 module.exports = {
-    publicPath: process.env.BASE_URL,
+    publicPath: IS_PROD ? process.env.BASE_URL : '/',
     assetsDir: process.env.VUE_APP_VERSION,
     lintOnSave: true,
     productionSourceMap: !IS_PROD,
