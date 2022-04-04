@@ -5,6 +5,10 @@ import ViewUI from 'view-design'
 ViewUI.Notice.config({
     top: 60
 })
+
+// 加载拖拽样式
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+
 Vue.use(ViewUI)
 Vue.config.productionTip = false
 

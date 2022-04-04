@@ -25,8 +25,8 @@ export default {
     box-shadow: 0 0 8px 0 #f4f4f4aa;
     position: relative;
     border-radius: 8px;
-    overflow: hidden;
     padding: 24px;
+    overflow-y: auto;
     transition: height, margin-top ease-out 0.3s;
 
     > div {
@@ -34,7 +34,6 @@ export default {
         height: 100%;
         background: #fff;
         border-radius: 8px;
-        overflow: hidden;
     }
 }
 </style>

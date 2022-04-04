@@ -14,7 +14,7 @@ export default [
                 component: () => import(/* webpackChunkName: "Home" */'../views/Home.vue')
             },
             {
-                path: '/Info',
+                path: '/Info/:id',
                 name: 'Info',
                 meta: {},
                 component: () => import(/* webpackChunkName: "Info" */'../views/Info.vue')
