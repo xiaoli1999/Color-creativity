@@ -19,7 +19,7 @@ export default {
 .layout-content {
     margin: auto;
     width: 1200px;
-    height: 600px;
+    height: 620px;
     background: initial;
     backdrop-filter: blur(5px);
     box-shadow: 0 0 8px 0 #f4f4f4aa;
@@ -34,6 +34,21 @@ export default {
         height: 100%;
         background: #fff;
         border-radius: 8px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .layout-content {
+        margin: auto;
+        width: 800px;
+        height: auto;
+        position: relative;
+        border-radius: 8px;
+        padding: 8px;
+
+        > div {
+            border-radius: 4px;
+        }
     }
 }
 </style>

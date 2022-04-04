@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="home" :class="loding ? 'min-h' : ''">
         <div class="home-img" v-for="item in colorPool" :key="item" @click="$router.push(`/Info/${item.id}`)">
             <img :src="item.img" alt="">
         </div>
@@ -10,6 +10,7 @@
 <script>
 
 import { getHomeList } from '../api'
+
 
 export default {
     name: 'Home',
@@ -35,21 +36,27 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+.min-h {
+    min-height: 190px;
+}
+
 .home {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
+    //display: flex;
+    //flex-wrap: wrap;
     position: relative;
+    font-size: 0;
 
     .home-img {
+        display: inline-block;
         width: calc(100% / 8);
-        height: calc(100% / 4);
+        padding-top: calc(100% / 8);
         position: relative;
         flex-shrink: 0;
         box-sizing: border-box;
         border: 1px solid #e5e5e5;
-        transition: all 200ms initial;
+        transition: all 400ms linear;
         overflow: hidden;
         cursor: pointer;
 
@@ -59,7 +66,7 @@ export default {
             height: 100%;
             top: 0;
             left: 0;
-            transition: all 200ms initial;
+            transition: all 400ms linear;
 
             &:hover {
                 transform: scale(1.2);
@@ -67,7 +74,8 @@ export default {
         }
 
         &:hover {
-            box-shadow: 0 0 8px 0 #00000020;
+            border-color: #a18cd1;
+            box-shadow: 0 0 10px .5px #00000030;
         }
     }
 }

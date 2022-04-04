@@ -9,9 +9,10 @@
                 <span v-if="!btnLoding">保存画板</span>
                 <span v-else>正在保存...</span>
             </Button>
+            <Button class="exit" type="primary" shape="circle" icon="ios-exit-outline" size="small" @click="$router.back()"></Button>
         </header>
         <main>
-            <div class="main" :style="{ transform: `scale(${colorScale})` }">
+            <div ref="main" class="main" :style="{ transform: `scale(${colorScale})` }">
                 <div v-for="(item, index) in colorList" :key="index" :style="{ background: `#${item}` }" @click="changeColor(item, index)"></div>
             </div>
             <Spin v-if="colorLoding" size="large" fix></Spin>
@@ -20,8 +21,8 @@
 </template>
 
 <script>
-import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { getColor, saveColor } from '../api'
+import html2canvas from 'html2canvas'
 
 export default {
     name: 'Info',
@@ -42,6 +43,15 @@ export default {
             this.colorLoding = true
             const color = await getColor(this.$route.id)
             this.colorList = color.split(',')
+            const that = this
+            if (this.colorList.length < 3600) {
+                (function addColor () {
+                    if (that.colorList.length < 3600) {
+                        that.colorList.push('fff')
+                        addColor()
+                    }
+                })()
+            }
             this.colorLoding = false
         },
         changeColor (color, i) {
@@ -56,6 +66,10 @@ export default {
             const res = await saveColor(queryData)
             if (res.error) return this.$Message.error(res.msg)
             this.$Message.success(res.msg)
+            html2canvas(this.$refs.main).then(canvas => {
+                const colorImgUrl = canvas.toDataURL('image/png')
+                console.log(colorImgUrl)
+            })
             this.btnLoding = false
         }
     }
@@ -78,6 +92,12 @@ export default {
 
         .slider {
             width: 240px;
+            margin-right: 20px;
+        }
+
+        .exit {
+            margin-left: 8px;
+            background: #a18cd1;
         }
     }
 
@@ -103,10 +123,31 @@ export default {
                 width: 8px;
                 height: 8px;
                 box-sizing: border-box;
-                border: 1px solid #eee;
+                border: 0.5px solid #e5e5e5;
             }
         }
     }
 }
 
+@media only screen and (max-width: 768px) {
+    .details {
+        width: 100%;
+        height: 620px;
+        overflow: hidden;
+
+        header {
+            padding: 0 4px;
+
+            .slider {
+                width: 140px;
+                margin-left: 2px;
+                margin-right: 0;
+            }
+
+            .exit {
+                margin-left: 4px;
+            }
+        }
+    }
+}
 </style>
