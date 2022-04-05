@@ -14,7 +14,8 @@ export function getHomeList () {
 }
 
 export function saveHomeImg (data) {
-    return http.post('img/save', data)
+    return { error: true, msg: '网络错误，请稍后再试!' }
+    // return http.post('img/save', data)
 }
 
 export function getColor (id) {

@@ -5,7 +5,7 @@
             <div class="slider">
                 <Slider v-model="colorScale" :min="1" :max="3" :step="0.5" show-stops show-tip="never"></Slider>
             </div>
-            <Button type="primary" :loading="loading" icon="ios-hand-outline" ghost size="small" :disabled="btnLoding" @click="saveLoading">
+            <Button type="primary" :loading="loading" icon="ios-hand-outline" ghost size="small" :disabled="btnLoding" @click="saveColor">
                 <span v-if="!btnLoding">保存画板</span>
                 <span v-else>正在保存...</span>
             </Button>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getColor, saveColor } from '../api'
+import { getColor, saveColor, saveHomeImg } from '../api'
 import html2canvas from 'html2canvas'
 
 export default {
@@ -29,7 +29,7 @@ export default {
     data () {
         return {
             colorList: [],
-            color: '#fff',
+            color: '#a18cd1',
             colorLoding: false,
             btnLoding: false,
             colorScale: 1
@@ -41,7 +41,7 @@ export default {
     methods: {
         async getColorInfo () {
             this.colorLoding = true
-            const color = await getColor(this.$route.id)
+            const color = await getColor(this.$route.params.id)
             this.colorList = color.split(',')
             const that = this
             if (this.colorList.length < 3600) {
@@ -57,19 +57,38 @@ export default {
         changeColor (color, i) {
             this.$set(this.colorList, i, this.color.split('#')[1])
         },
-        async saveLoading () {
+        // 保存当前绘画板颜色，并生成图片
+        async saveColor () {
             this.btnLoding = true
+
+            // 保存绘画板颜色
             const queryData = {
-                id: this.$route.id,
+                id: this.$route.params.id,
                 color: this.colorList.join(',')
             }
             const res = await saveColor(queryData)
-            if (res.error) return this.$Message.error(res.msg)
+            if (res.error) {
+                this.$Message.error(res.msg)
+                return (this.btnLoding = false)
+            }
             this.$Message.success(res.msg)
-            html2canvas(this.$refs.main).then(canvas => {
-                const colorImgUrl = canvas.toDataURL('image/png')
-                console.log(colorImgUrl)
-            })
+
+            // 绘制当前画板缩略图
+            const canvas = await html2canvas(this.$refs.main)
+            if (!canvas) {
+                this.$Message.error('画板缩略图绘制有误!')
+                return (this.btnLoding = false)
+            }
+            const queryImg = {
+                id: this.$route.params.id,
+                img: canvas.toDataURL('image/png')
+            }
+            const imgRes = await saveHomeImg(queryImg)
+            if (imgRes.error) {
+                this.$Message.error(imgRes.msg)
+                return (this.btnLoding = false)
+            }
+
             this.btnLoding = false
         }
     }
@@ -118,12 +137,13 @@ export default {
             flex-wrap: wrap;
             position: relative;
             box-sizing: content-box;
+            transform-origin: top left;
 
             div {
                 width: 8px;
                 height: 8px;
                 box-sizing: border-box;
-                border: 0.5px solid #e5e5e5;
+                border: 0.5px solid #f7f8fa;
             }
         }
     }

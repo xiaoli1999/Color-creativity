@@ -55,7 +55,7 @@ export default {
         position: relative;
         flex-shrink: 0;
         box-sizing: border-box;
-        border: 1px solid #e5e5e5;
+        border: 1px solid #f7f8fa;
         transition: all 400ms linear;
         overflow: hidden;
         cursor: pointer;
@@ -75,6 +75,7 @@ export default {
 
         &:hover {
             border-color: #a18cd1;
+            border-radius: 4px;
             box-shadow: 0 0 10px .5px #00000030;
         }
     }

@@ -10,6 +10,9 @@ export default {
     name: 'App',
     data () {
         return {}
+    },
+    mounted () {
+        document.title = '色彩创意绘板'
     }
 }
 </script>
