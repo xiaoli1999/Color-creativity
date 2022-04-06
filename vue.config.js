@@ -59,7 +59,11 @@ module.exports = {
             '^/api': {
                 target: process.env.VUE_APP_API_URL,
                 ws: true,
-                changeOrigin: true
+                changeOrigin: true,
+                pathRewrite: {
+                    // 取消api代理
+                    '^/api': '/'
+                }
             }
         }
     },
