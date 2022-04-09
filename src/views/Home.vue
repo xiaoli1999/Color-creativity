@@ -1,7 +1,7 @@
 <template>
     <div class="home" :class="loding ? 'min-h' : ''">
-        <div class="home-img" v-for="item in colorPool" :key="item" @click="$router.push(`/Info/${item.id}`)">
-            <img :src="item.img" alt="">
+        <div class="home-img" v-for="item in colorPool" :key="item" @click="$router.push(`/Info/${item.imageId}`)">
+            <img :src="item.imagePath" alt="">
         </div>
         <Spin v-if="loding" size="large" fix></Spin>
     </div>

@@ -19,7 +19,7 @@ export default {
 .layout-content {
     margin: auto;
     width: 1200px;
-    height: 620px;
+    height: 634px;
     background: initial;
     backdrop-filter: blur(5px);
     box-shadow: 0 0 8px 0 #f4f4f4aa;

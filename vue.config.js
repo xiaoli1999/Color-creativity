@@ -62,7 +62,7 @@ module.exports = {
                 changeOrigin: true,
                 pathRewrite: {
                     // 取消api代理
-                    '^/api': '/'
+                    '^/api': ''
                 }
             }
         }

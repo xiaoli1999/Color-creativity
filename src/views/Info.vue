@@ -41,13 +41,14 @@ export default {
     methods: {
         async getColorInfo () {
             this.colorLoding = true
-            const color = await getColor(this.$route.params.id)
-            this.colorList = color.split(',')
+            const data = await getColor(this.$route.params.id)
+            if (!data.color) data.color = ''
+            this.colorList = data.color.split(',')
             const that = this
             if (this.colorList.length < 3600) {
                 (function addColor () {
                     if (that.colorList.length < 3600) {
-                        that.colorList.push('fff')
+                        that.colorList.push('ffffff')
                         addColor()
                     }
                 })()
@@ -63,15 +64,15 @@ export default {
 
             // 保存绘画板颜色
             const queryData = {
-                id: this.$route.params.id,
+                imageId: this.$route.params.id,
                 color: this.colorList.join(',')
             }
             const res = await saveColor(queryData)
-            if (res.error) {
+            if (res.code !== 200) {
                 this.$Message.error(res.msg)
                 return (this.btnLoding = false)
             }
-            this.$Message.success(res.msg)
+            this.$Message.success('保存成功！')
 
             // 绘制当前画板缩略图
             const canvas = await html2canvas(this.$refs.main)
@@ -80,14 +81,15 @@ export default {
                 return (this.btnLoding = false)
             }
             const queryImg = {
-                id: this.$route.params.id,
-                img: canvas.toDataURL('image/png')
+                imageId: this.$route.params.id,
+                imagePath: canvas.toDataURL('image/png')
             }
             const imgRes = await saveHomeImg(queryImg)
-            if (imgRes.error) {
+            if (imgRes.code !== 200) {
                 this.$Message.error(imgRes.msg)
                 return (this.btnLoding = false)
             }
+            this.$Message.success('画板缩略图已生成！！')
 
             this.btnLoding = false
         }
